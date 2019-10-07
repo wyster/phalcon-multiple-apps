@@ -1,0 +1,19 @@
+version: '3'
+services:
+  site:
+    container_name: site
+    build: ./site
+    ports:
+      - "8080:80"
+    volumes:
+      - ./site:/var/www/html
+    environment:
+      RUN_SCRIPTS: 1
+  users:
+    container_name: users
+    build: ./users
+    volumes:
+      - ./users:/var/www/html
+    environment:
+      RUN_SCRIPTS: 1
+      WEBROOT: /var/www/html/public
