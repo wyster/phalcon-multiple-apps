@@ -27,7 +27,11 @@ class Api implements Evaluator
             'action' => $methodAndController[1],
         ]);
         $this->dispatcher->setParams($arguments);
-        $this->dispatcher->dispatch();
+        try {
+            $this->dispatcher->dispatch();
+        } catch (\Throwable $e) {
+            throw new \Datto\JsonRpc\Exceptions\ApplicationException($e->getMessage(), $e->getCode());
+        }
         return $this->dispatcher->getReturnedValue();
     }
 }
