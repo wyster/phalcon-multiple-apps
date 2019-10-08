@@ -8,12 +8,12 @@ use Phalcon\Mvc\Micro\Collection as MicroCollection;
  * @var \Phalcon\Mvc\Micro $app
  */
 
-$orders = new MicroCollection();
+$index = new MicroCollection();
 
-$orders->setHandler(new \app\controllers\IndexController());
-$orders->post('/', 'indexAction');
+$index->setHandler(new \app\controllers\IndexController());
+$index->post('/', 'indexAction');
 
-$app->mount($orders);
+$app->mount($index);
 
 /**
  * Not found handler

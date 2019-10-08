@@ -18,6 +18,7 @@ class Api implements Evaluator
         $this->dispatcher = $dispatcher;
     }
 
+    // @todo тесты
     public function evaluate($method, $arguments): array
     {
         $this->validateControllerAndAction($method);

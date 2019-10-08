@@ -5,7 +5,7 @@ namespace app\models;
 class User extends \Phalcon\Mvc\Model
 {
     /**
-     * @todo у свойств магия, поэтому возможен доступ не только через get и set
+     * @todo у свойств магия, поэтому возможен доступ не только через методы get и set
      * @var integer
      */
     private $id;
