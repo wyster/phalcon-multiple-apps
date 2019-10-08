@@ -27,7 +27,7 @@ class AuthController extends Controller
         }
 
         if (!password_verify($password, $row->password)) {
-            throw new \Datto\JsonRpc\Exceptions\ApplicationException('Invalid password', 1);
+            throw new \Datto\JsonRpc\Exceptions\ApplicationException('Invalid login or password', 1);
         }
 
         return $row->toArray(['id', 'login']);
