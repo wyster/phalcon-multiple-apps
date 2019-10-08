@@ -33,4 +33,3 @@ class AuthController extends Controller
         return $row->toArray(['id', 'login']);
     }
 }
-

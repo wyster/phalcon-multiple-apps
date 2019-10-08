@@ -17,7 +17,9 @@ class UserMigration_100 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('user', [
+        $this->morphTable(
+            'user',
+            [
                 'columns' => [
                     new Column(
                         'id',
@@ -86,7 +88,5 @@ class UserMigration_100 extends Migration
      */
     public function down()
     {
-
     }
-
 }

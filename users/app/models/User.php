@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace app\models;
 
@@ -72,5 +72,4 @@ class User extends \Phalcon\Mvc\Model
             ->getFirst();
         return $result ?: null;
     }
-
 }

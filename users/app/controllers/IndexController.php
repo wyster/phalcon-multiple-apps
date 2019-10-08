@@ -19,4 +19,3 @@ class IndexController extends \Phalcon\Mvc\Controller
         return $server->reply($this->request->getPost()[0]);
     }
 }
-

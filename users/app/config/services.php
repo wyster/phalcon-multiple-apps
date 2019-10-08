@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Phalcon\Mvc\View\Simple as View;
 use Phalcon\Mvc\Url as UrlResolver;
@@ -57,41 +57,5 @@ $di->setShared('db', function () {
      */
     $connection = new $class($params);
 
-    /*$connection->createTable(
-        'user',
-        null,
-        [
-            'columns' => [
-                new Column(
-                    'id',
-                    [
-                        'type'          => Column::TYPE_INTEGER,
-                        'size'          => 10,
-                        'notNull'       => true,
-                        'autoIncrement' => true,
-                        'primary'       => true,
-                    ]
-                ),
-                new Column(
-                    'login',
-                    [
-                        'type'    => Column::TYPE_VARCHAR,
-                        'size'    => 255,
-                        'notNull' => true,
-                    ]
-                ),
-                new Column(
-                    'password',
-                    [
-                        'type'    => Column::TYPE_VARCHAR,
-                        'size'    => 255,
-                        'notNull' => true,
-                    ]
-                ),
-            ]
-        ]
-    );*/
-
     return $connection;
 });
-
