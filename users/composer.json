@@ -4,7 +4,9 @@
     },
     "require-dev": {
         "phalcon/ide-stubs": "^3.4",
-        "phalcon/devtools": "^3.4"
+        "phalcon/devtools": "^3.4",
+        "mockery/mockery": "^1.2",
+        "phpunit/phpunit": "7"
     },
     "autoload": {
         "psr-4": {

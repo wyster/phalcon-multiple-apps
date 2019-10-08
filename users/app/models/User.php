@@ -117,5 +117,4 @@ class User extends \Phalcon\Mvc\Model
     {
         $this->password = $password;
     }
-
 }

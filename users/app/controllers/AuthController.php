@@ -4,8 +4,6 @@ namespace app\controllers;
 
 use app\models\User;
 use Datto\JsonRpc\Exceptions\ApplicationException;
-use Datto\JsonRpc\Exceptions\MethodException;
-use Phalcon\Db\AdapterInterface;
 use Phalcon\Mvc\Controller;
 
 class AuthController extends Controller
@@ -15,6 +13,9 @@ class AuthController extends Controller
     {
         $login = $this->dispatcher->getParam('login');
         $password = $this->dispatcher->getParam('password');
+        if (!$login || !$password) {
+            throw new ApplicationException('Invalid login or password', 1);
+        }
         $row = User::findByLogin($login);
         if ($row === null) {
             throw new ApplicationException('Invalid login or password', 1);
