@@ -3,6 +3,8 @@
 namespace app\JsonRpc;
 
 use Datto\JsonRpc\Evaluator;
+use Datto\JsonRpc\Exceptions\ApplicationException;
+use function count;
 
 class Api implements Evaluator
 {
@@ -18,21 +20,35 @@ class Api implements Evaluator
 
     public function evaluate($method, $arguments): array
     {
-        $methodAndController = explode('.', $method);
-        if (count($methodAndController) !== 2) {
-            throw new \Datto\JsonRpc\Exceptions\MethodException('invalid');
-        }
-        $this->dispatcher->forward([
-            'controller' => 'app\controllers\\' . ucfirst($methodAndController[0]),
-            'action' => $methodAndController[1],
-        ]);
+        $this->validateControllerAndAction($method);
+        $this->dispatcher->forward($this->getControllerAndAction($method));
         $this->dispatcher->setParams($arguments);
         try {
             $this->dispatcher->dispatch();
         } catch (\Throwable $e) {
             error_log($e->__toString());
-            throw new \Datto\JsonRpc\Exceptions\ApplicationException($e->getMessage(), $e->getCode());
+            throw new ApplicationException($e->getMessage(), $e->getCode());
         }
         return $this->dispatcher->getReturnedValue();
+    }
+
+    private function validateControllerAndAction(string $method): void
+    {
+        $methodAndController = explode('.', $method);
+        if (count($methodAndController) !== 2) {
+            throw new ApplicationException(
+                'Invalid controller and action name, need use `controllerName.actionName`',
+                1
+            );
+        }
+    }
+
+    private function getControllerAndAction(string $method): array
+    {
+        $methodAndController = explode('.', $method);
+        return [
+            'controller' => 'app\controllers\\' . ucfirst($methodAndController[0]),
+            'action' => $methodAndController[1],
+        ];
     }
 }
