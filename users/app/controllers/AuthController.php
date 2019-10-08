@@ -1,17 +1,19 @@
 <?php declare(strict_types=1);
 
+namespace app\controllers;
+
 use Datto\JsonRpc\Exceptions\MethodException;
 use Phalcon\Db\AdapterInterface;
 use Phalcon\Mvc\Controller;
 
 class AuthController extends Controller
 {
-    public function indexAction()
+    public function indexAction(): array
     {
         $login = $this->dispatcher->getParam('login');
         $password = $this->dispatcher->getParam('password');
         /**
-         * @var app\models\User|false $row
+         * @var \app\models\User|false $row
          */
         $row = \app\models\User::findByLogin($login);
         if ($row === null) {

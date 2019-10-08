@@ -10,8 +10,8 @@ use Phalcon\Mvc\Micro\Collection as MicroCollection;
 
 $orders = new MicroCollection();
 
-$orders->setHandler(new IndexController());
-$orders->post('/', 'index');
+$orders->setHandler(new \app\controllers\IndexController());
+$orders->post('/', 'indexAction');
 
 $app->mount($orders);
 

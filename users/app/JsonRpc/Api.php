@@ -16,14 +16,14 @@ class Api implements Evaluator
         $this->dispatcher = $dispatcher;
     }
 
-    public function evaluate($method, $arguments)
+    public function evaluate($method, $arguments): array
     {
         $methodAndController = explode('.', $method);
         if (count($methodAndController) !== 2) {
             throw new \Datto\JsonRpc\Exceptions\MethodException('invalid');
         }
         $this->dispatcher->forward([
-            'controller' => $methodAndController[0],
+            'controller' => 'app\controllers\\' . ucfirst($methodAndController[0]),
             'action' => $methodAndController[1],
         ]);
         $this->dispatcher->setParams($arguments);
