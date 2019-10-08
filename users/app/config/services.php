@@ -2,6 +2,7 @@
 
 use Phalcon\Mvc\View\Simple as View;
 use Phalcon\Mvc\Url as UrlResolver;
+use \Phalcon\Db\Column as Column;
 
 /**
  * Shared configuration service
@@ -51,7 +52,45 @@ $di->setShared('db', function () {
         unset($params['charset']);
     }
 
+    /**
+     * @var \Phalcon\Db\AdapterInterface $connection
+     */
     $connection = new $class($params);
+
+    /*$connection->createTable(
+        'user',
+        null,
+        [
+            'columns' => [
+                new Column(
+                    'id',
+                    [
+                        'type'          => Column::TYPE_INTEGER,
+                        'size'          => 10,
+                        'notNull'       => true,
+                        'autoIncrement' => true,
+                        'primary'       => true,
+                    ]
+                ),
+                new Column(
+                    'login',
+                    [
+                        'type'    => Column::TYPE_VARCHAR,
+                        'size'    => 255,
+                        'notNull' => true,
+                    ]
+                ),
+                new Column(
+                    'password',
+                    [
+                        'type'    => Column::TYPE_VARCHAR,
+                        'size'    => 255,
+                        'notNull' => true,
+                    ]
+                ),
+            ]
+        ]
+    );*/
 
     return $connection;
 });
