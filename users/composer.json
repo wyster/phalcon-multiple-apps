@@ -1,5 +1,9 @@
 {
     "require": {
         "datto/json-rpc": "^6.0"
+    },
+    "require-dev": {
+        "phalcon/ide-stubs": "^3.4",
+        "phalcon/devtools": "^3.4"
     }
 }
