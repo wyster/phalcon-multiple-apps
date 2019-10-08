@@ -30,6 +30,7 @@ class Api implements Evaluator
         try {
             $this->dispatcher->dispatch();
         } catch (\Throwable $e) {
+            error_log($e->__toString());
             throw new \Datto\JsonRpc\Exceptions\ApplicationException($e->getMessage(), $e->getCode());
         }
         return $this->dispatcher->getReturnedValue();
