@@ -17,7 +17,7 @@ class AuthController extends Controller
         $password = $this->dispatcher->getParam('password');
         $row = User::findByLogin($login);
         if ($row === null) {
-            throw new ApplicationException('User not found', 1);
+            throw new ApplicationException('Invalid login or password', 1);
         }
 
         if (!password_verify($password, $row->getPassword())) {
