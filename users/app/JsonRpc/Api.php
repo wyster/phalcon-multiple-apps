@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\JsonRpc;
+namespace app\JsonRpc;
 
 use Datto\JsonRpc\Evaluator;
 

@@ -13,7 +13,6 @@ $loader->registerNamespaces(
 
 $loader->registerDirs(
     [
-        APP_PATH,
         $config->application->controllersDir,
         $config->application->modelsDir
     ]

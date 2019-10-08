@@ -12,10 +12,7 @@ class IndexController extends \Phalcon\Mvc\Controller
     {
         $api = new Api($this->dispatcher);
         $server = new Server($api);
-
-        if (!array_key_exists(0, $this->request->getPost())) {
-            throw new \Datto\JsonRpc\Exceptions\ApplicationException('Content is empty');
-        }
-        return $server->reply($this->request->getPost()[0]);
+        $data = $this->request->getRawBody();
+        return $server->reply($data);
     }
 }
