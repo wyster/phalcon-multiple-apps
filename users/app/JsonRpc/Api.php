@@ -4,9 +4,6 @@ namespace app\JsonRpc;
 
 use Datto\JsonRpc\Evaluator;
 
-/**
- * @author Ilya Zelenin <wyster@make.im>
- */
 class Api implements Evaluator
 {
     /**
