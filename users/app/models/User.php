@@ -4,24 +4,21 @@ namespace app\models;
 
 class User extends \Phalcon\Mvc\Model
 {
-
     /**
-     *
+     * @todo у свойств магия, поэтому возможен доступ не только через get и set
      * @var integer
      */
-    public $id;
+    private $id;
 
     /**
-     *
      * @var string
      */
-    public $login;
+    private $login;
 
     /**
-     *
      * @var string
      */
-    public $password;
+    private $password;
 
     /**
      * Initialize method for model.
@@ -72,4 +69,53 @@ class User extends \Phalcon\Mvc\Model
             ->getFirst();
         return $result ?: null;
     }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogin(): string
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param string $login
+     */
+    public function setLogin(string $login): void
+    {
+        $this->login = $login;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
 }

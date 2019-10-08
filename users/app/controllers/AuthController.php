@@ -6,14 +6,6 @@ use Phalcon\Mvc\Controller;
 
 class AuthController extends Controller
 {
-    /**
-     * @return AdapterInterface
-     */
-    private function getDb(): AdapterInterface
-    {
-        return $this->di->get('db');
-    }
-
     public function indexAction()
     {
         $login = $this->dispatcher->getParam('login');
@@ -26,7 +18,7 @@ class AuthController extends Controller
             throw new \Datto\JsonRpc\Exceptions\ApplicationException('User not found', 1);
         }
 
-        if (!password_verify($password, $row->password)) {
+        if (!password_verify($password, $row->getPassword())) {
             throw new \Datto\JsonRpc\Exceptions\ApplicationException('Invalid login or password', 1);
         }
 
