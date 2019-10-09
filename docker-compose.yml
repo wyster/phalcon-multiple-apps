@@ -1,7 +1,7 @@
 version: '3'
 services:
   site:
-    container_name: site
+    container_name: ${SITE_CONTAINER_NAME}
     build: ./site
     ports:
       - "${PORT}:80"
@@ -9,11 +9,14 @@ services:
       - ./site:/var/www/html
     environment:
       RUN_SCRIPTS: 1
+      USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}
+      SITE_CONTAINER_NAME: ${SITE_CONTAINER_NAME}
   users:
-    container_name: users
+    container_name: ${USERS_CONTAINER_NAME}
     build: ./users
     volumes:
       - ./users:/var/www/html
     environment:
       RUN_SCRIPTS: 1
-      WEBROOT: /var/www/html/public
+      SITE_CONTAINER_NAME: ${SITE_CONTAINER_NAME}
+      USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}
