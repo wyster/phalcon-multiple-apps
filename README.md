@@ -31,7 +31,8 @@
 
 
 **XDebug**
-Нужно создать `docker-compose.override.yml`
+
+Для отладки в контейнерах черех xdebug нужно создать файл `docker-compose.override.yml`
 
 В котором будет следующее содержимое:
 
@@ -50,4 +51,4 @@ services:
       PHP_IDE_CONFIG: serverName=${USERS_CONTAINER_NAME}
 
 ```
-Где $LOCAL_IP заменить на локальный ип
+Где `$LOCAL_IP` заменить на локальный ип
