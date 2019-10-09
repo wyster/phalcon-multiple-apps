@@ -3,3 +3,4 @@ build
 *.db
 vendor
 .phalcon
+docker-compose.override.yml

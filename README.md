@@ -28,3 +28,26 @@
 `php coverage-checker.php ./site/build/logs/clover.xml 100`
 
 `php coverage-checker.php ./users/build/logs/clover.xml 100`
+
+
+**XDebug**
+Нужно создать `docker-compose.override.yml`
+
+В котором будет следующее содержимое:
+
+```yaml
+version: '3'
+services:
+  site:
+    environment:
+      ENABLE_XDEBUG: 1
+      XDEBUG_CONFIG: remote_host=$LOCAL_IP
+      PHP_IDE_CONFIG: serverName=${SITE_CONTAINER_NAME}
+  users:
+    environment:
+      ENABLE_XDEBUG: 1
+      XDEBUG_CONFIG: remote_host=$LOCAL_IP
+      PHP_IDE_CONFIG: serverName=${USERS_CONTAINER_NAME}
+
+```
+Где $LOCAL_IP заменить на локальный ип
