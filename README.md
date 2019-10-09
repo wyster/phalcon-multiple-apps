@@ -1,4 +1,4 @@
-Запуск контейнеров
+**Запуск контейнеров**
 
 `docker-compose up`
 
@@ -16,13 +16,14 @@
 Другие доступные переменные можно посмотерть в .env
 
 
-Тесты:
+**Тесты**
 
 `composer install -d ./site && ./site/vendor/bin/phpunit  --configuration=./site/phpunit.xml`
 
 `composer install -d ./users && ./users/vendor/bin/phpunit --configuration=./users/phpunit.xml`
 
-Покрытие:
+
+**Покрытие**
 
 `php coverage-checker.php ./site/build/logs/clover.xml 100`
 
