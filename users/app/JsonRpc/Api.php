@@ -4,33 +4,41 @@ namespace app\JsonRpc;
 
 use Datto\JsonRpc\Evaluator;
 use Datto\JsonRpc\Exceptions\ApplicationException;
+use Phalcon\DispatcherInterface;
 use function count;
 
 class Api implements Evaluator
 {
     /**
-     * @var \Phalcon\Dispatcher
+     * @var DispatcherInterface
      */
     private $dispatcher;
 
-    public function __construct(\Phalcon\Dispatcher $dispatcher)
+    public function __construct(DispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
-    // @todo тесты
+    /**
+     * @return DispatcherInterface
+     */
+    private function getDispatcher(): DispatcherInterface
+    {
+        return $this->dispatcher;
+    }
+
     public function evaluate($method, $arguments): array
     {
         $this->validateControllerAndAction($method);
-        $this->dispatcher->forward($this->getControllerAndAction($method));
-        $this->dispatcher->setParams($arguments);
+        $this->getDispatcher()->forward($this->getControllerAndAction($method));
+        $this->getDispatcher()->setParams($arguments);
         try {
-            $this->dispatcher->dispatch();
+            $this->getDispatcher()->dispatch();
         } catch (\Throwable $e) {
             error_log($e->__toString());
             throw new ApplicationException($e->getMessage(), $e->getCode());
         }
-        return $this->dispatcher->getReturnedValue();
+        return $this->getDispatcher()->getReturnedValue();
     }
 
     private function validateControllerAndAction(string $method): void

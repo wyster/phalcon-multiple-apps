@@ -8,7 +8,6 @@ use Phalcon\Mvc\Controller;
 
 class AuthController extends Controller
 {
-    // @todo тесты
     public function indexAction(): array
     {
         $login = $this->dispatcher->getParam('login');
