@@ -3,9 +3,8 @@
 namespace app\test\JsonRpc;
 
 use app\JsonRpc\Api;
-use Datto\JsonRpc\Exceptions\ApplicationException;
-use PHPUnit\Framework\TestCase;
 use app\test\UnitTestCase;
+use Datto\JsonRpc\Exceptions\ApplicationException;
 use ReflectionMethod;
 
 class ApiTest extends UnitTestCase
@@ -17,7 +16,21 @@ class ApiTest extends UnitTestCase
 
     public function testEvaluate(): void
     {
-        $this->assertTrue(true);
+        $dispatcherMock = $this->getMockBuilder(\Phalcon\DispatcherInterface::class)
+            ->getMockForAbstractClass();
+        $api = $this->getMockBuilder(Api::class)
+            ->setConstructorArgs([
+                $dispatcherMock
+            ])
+            ->setMethodsExcept(['evaluate'])
+            ->getMock();
+        $args = ['login' => 'user', 'password' => '12345'];
+        $dispatcherMock->expects($this->once())->method('forward');
+        $dispatcherMock->expects($this->once())->method('setParams')->with($args);
+        $dispatcherMock->expects($this->once())->method('dispatch');
+        $dispatcherMock->method('getReturnedValue')->willReturn([]);
+        $result = $api->evaluate('controller.action', $args);
+        $this->assertSame([], $result);
     }
 
     public function testValidateControllerAndAction(): void
