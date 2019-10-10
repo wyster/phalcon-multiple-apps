@@ -1,6 +1,58 @@
 **Запуск контейнеров**
 
-`docker-compose up`
+1. Необходимо создать `docker-compose.override.yml` и определиться с веб сервером:
+
+_Запуск контейнеров с внутренним php сервером_
+
+```yaml
+version: '3'
+services:
+  site:
+    environment:
+      USE_PHP_INTERNAL_SERVER: 1
+    ports:
+      - "${PORT}:80"
+  users:
+    environment:
+      USE_PHP_INTERNAL_SERVER: 1
+```
+
+_Запуск контейнеров с nginx сервером_
+
+```yaml
+version: '3'
+services:
+  site_nginx:
+    container_name: ${SITE_CONTAINER_NAME}_nginx
+    image: nginx:alpine
+    volumes:
+      - ./site/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
+      - ./site:/var/www/html
+    ports:
+      - "${PORT}:80"
+    depends_on:
+      - site
+  users_nginx:
+    container_name: ${USERS_CONTAINER_NAME}_nginx
+    image: nginx:alpine
+    volumes:
+      - ./users/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
+      - ./users:/var/www/html
+    depends_on:
+      - users
+  site:
+    tty: true
+    environment:
+      USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}_nginx
+      # Включает xdebug
+      #ENABLE_XDEBUG: 1
+  users:
+    tty: true
+```
+
+Скопировать конфиг предпочитаемого сервера и вставить его в `docker-compose.override.yml`
+
+2. Выполнить `docker-compose up`
 
 Через env можно передать желаемый порт, по умолчанию 80
 
@@ -29,26 +81,3 @@
 
 `php coverage-checker.php ./users/build/logs/clover.xml 100`
 
-
-**XDebug**
-
-Для отладки в контейнерах черех xdebug нужно создать файл `docker-compose.override.yml`
-
-В котором будет следующее содержимое:
-
-```yaml
-version: '3'
-services:
-  site:
-    environment:
-      ENABLE_XDEBUG: 1
-      XDEBUG_CONFIG: remote_host=$LOCAL_IP
-      PHP_IDE_CONFIG: serverName=${SITE_CONTAINER_NAME}
-  users:
-    environment:
-      ENABLE_XDEBUG: 1
-      XDEBUG_CONFIG: remote_host=$LOCAL_IP
-      PHP_IDE_CONFIG: serverName=${USERS_CONTAINER_NAME}
-
-```
-Где `$LOCAL_IP` заменить на локальный ип
