@@ -27,7 +27,6 @@ services:
     image: nginx:alpine
     volumes:
       - ./site/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
-      - ./site:/var/www/html
     ports:
       - "${PORT}:80"
     depends_on:
@@ -37,7 +36,6 @@ services:
     image: nginx:alpine
     volumes:
       - ./users/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
-      - ./users:/var/www/html
     depends_on:
       - users
   site:
