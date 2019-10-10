@@ -8,7 +8,7 @@ _Запуск контейнеров с внутренним php серверо�
 version: '3'
 services:
   site:
-    command:
+    environment:
       USE_PHP_INTERNAL_SERVER: 1
     ports:
       - "${PORT}:80"
@@ -23,7 +23,7 @@ _Запуск контейнеров с nginx сервером_
 version: '3'
 services:
   site_nginx:
-    container_name: site_nginx
+    container_name: ${SITE_CONTAINER_NAME}_nginx
     image: nginx:alpine
     volumes:
       - ./site/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
@@ -33,7 +33,7 @@ services:
     depends_on:
       - site
   users_nginx:
-    container_name: users_nginx
+    container_name: ${USERS_CONTAINER_NAME}_nginx
     image: nginx:alpine
     volumes:
       - ./users/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
@@ -43,7 +43,7 @@ services:
   site:
     tty: true
     environment:
-      USERS_CONTAINER_NAME: users_nginx
+      USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}_nginx
       # Включает xdebug
       #ENABLE_XDEBUG: 1
   users:
