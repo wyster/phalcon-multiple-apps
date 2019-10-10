@@ -1,3 +1,11 @@
+**Для полного клонирования с подмодулями нужно вызывать**
+
+`$ git clone git@github.com:wyster/phalcon-workspacex.git`
+
+`$ git submodule init`
+
+`$ git submodule update`
+
 **Запуск контейнеров**
 
 1. Необходимо создать `docker-compose.override.yml` и определиться с веб сервером:
@@ -39,7 +47,7 @@ services:
     depends_on:
       - users
   site:
-    tty: true
+    tty: true`
     environment:
       USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}_nginx
       # Включает xdebug
