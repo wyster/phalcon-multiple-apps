@@ -52,7 +52,24 @@ services:
 
 Скопировать конфиг предпочитаемого сервера и вставить его в `docker-compose.override.yml`
 
-2. Выполнить `docker-compose up`
+2. Для того чтобы проверить работоспособность нужна база данных, можно использовать sqlite, для этого создать
+`users/app/config/config.local.php` с следующим содержимым
+
+```php
+<?php
+
+declare(strict_types=1);
+
+return new \Phalcon\Config([
+    'database' => [
+        'adapter' => 'Sqlite',
+        'dbname' => BASE_PATH . '/data/sqlite.db',
+        'schema' => '',
+    ],
+]);
+
+```
+3. Выполнить `docker-compose up`
 
 Через env можно передать желаемый порт, по умолчанию 80
 
