@@ -94,7 +94,7 @@ return new \Phalcon\Config([
 **Тесты**
 
 ```
-$ composer install -d ./site && ./site/vendor/bin/phpunit  --configuration=./site/phpunit.xml
+$ cd site && make unit-test && cd -
 $ cd users && make unit-test && cd -
 ```
 
@@ -102,7 +102,7 @@ $ cd users && make unit-test && cd -
 **Покрытие**
 
 ```
-$ php coverage-checker.php ./site/build/logs/clover.xml 100
+$ cd site && make coverage && cd -
 $ cd users && make coverage && cd -
 ```
 
