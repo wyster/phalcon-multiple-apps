@@ -95,7 +95,7 @@ return new \Phalcon\Config([
 
 ```
 $ composer install -d ./site && ./site/vendor/bin/phpunit  --configuration=./site/phpunit.xml
-$ composer install -d ./users && ./users/vendor/bin/phpunit --configuration=./users/phpunit.xml
+$ cd users && make unit-test && cd -
 ```
 
 
@@ -103,6 +103,6 @@ $ composer install -d ./users && ./users/vendor/bin/phpunit --configuration=./us
 
 ```
 $ php coverage-checker.php ./site/build/logs/clover.xml 100
-$ php coverage-checker.php ./users/build/logs/clover.xml 100
+$ cd users && make coverage && cd -
 ```
 
