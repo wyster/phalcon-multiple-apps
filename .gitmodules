@@ -1,0 +1,6 @@
+[submodule "site"]
+	path = site
+	url = git@github.com:wyster/phalcon-simple-app.git
+[submodule "users"]
+	path = users
+	url = git@github.com:wyster/phalcon-simple-app2.git

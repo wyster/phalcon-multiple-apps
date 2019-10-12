@@ -1,3 +1,11 @@
+**Для полного клонирования с подмодулями нужно вызывать**
+
+```
+$ git clone git@github.com:wyster/phalcon-workspacex.git
+$ git submodule init
+$ git submodule update
+```
+
 **Запуск контейнеров**
 
 1. Необходимо создать `docker-compose.override.yml` и определиться с веб сервером:
@@ -27,7 +35,6 @@ services:
     image: nginx:alpine
     volumes:
       - ./site/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
-      - ./site:/var/www/html
     ports:
       - "${PORT}:80"
     depends_on:
@@ -37,11 +44,10 @@ services:
     image: nginx:alpine
     volumes:
       - ./users/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
-      - ./users:/var/www/html
     depends_on:
       - users
   site:
-    tty: true
+    tty: true`
     environment:
       USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}_nginx
       # Включает xdebug
@@ -69,13 +75,13 @@ return new \Phalcon\Config([
 ]);
 
 ```
-3. Выполнить `docker-compose up`
+3. Выполнить `$ docker-compose up`
 
 Через env можно передать желаемый порт, по умолчанию 80
 
 Пример запуска на порту 8080
 
-`PORT=8080 docker-compose up`
+`$ PORT=8080 docker-compose up`
 
 Так же можно передать USERS_CONTAINER_NAME и SITE_CONTAINER_NAME
  
@@ -87,14 +93,16 @@ return new \Phalcon\Config([
 
 **Тесты**
 
-`composer install -d ./site && ./site/vendor/bin/phpunit  --configuration=./site/phpunit.xml`
-
-`composer install -d ./users && ./users/vendor/bin/phpunit --configuration=./users/phpunit.xml`
+```
+$ cd site && make unit-test && cd -
+$ cd users && make unit-test && cd -
+```
 
 
 **Покрытие**
 
-`php coverage-checker.php ./site/build/logs/clover.xml 100`
-
-`php coverage-checker.php ./users/build/logs/clover.xml 100`
+```
+$ cd site && make coverage && cd -
+$ cd users && make coverage && cd -
+```
 
