@@ -4,3 +4,4 @@ build
 vendor
 .phalcon
 docker-compose.override.yml
+.env

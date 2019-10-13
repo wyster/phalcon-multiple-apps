@@ -9,6 +9,8 @@ services:
       USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}
     tty: true
     restart: always
+    env_file:
+      - ./.env
   users:
     container_name: ${USERS_CONTAINER_NAME}
     build: ./users
@@ -16,3 +18,5 @@ services:
       - ./users:/var/www/html
     tty: true
     restart: always
+    env_file:
+      - ./.env

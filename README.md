@@ -8,7 +8,9 @@ $ git submodule update
 
 **Запуск контейнеров**
 
-1. Необходимо создать `docker-compose.override.yml` и определиться с веб сервером:
+1. Настройка, запустить `make setup`, при желании можно поменять коннект к базе данных и другие переменные в .env
+
+2. Необходимо создать `docker-compose.override.yml` и определиться с веб сервером:
 
 _Запуск контейнеров с внутренним php сервером_
 
@@ -40,6 +42,7 @@ services:
     depends_on:
       - site
     tty: true
+    restart: always
   users_nginx:
     container_name: ${USERS_CONTAINER_NAME}_nginx
     image: nginx:alpine
@@ -47,35 +50,15 @@ services:
       - ./users/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - users
+    tty: true
     restart: always
   site:
     environment:
       USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}_nginx
-      # Включает xdebug
-      #ENABLE_XDEBUG: 1
-    tty: true
-    restart: always
 ```
 
 Скопировать конфиг предпочитаемого сервера и вставить его в `docker-compose.override.yml`
 
-2. Для того чтобы проверить работоспособность нужна база данных, можно использовать sqlite, для этого создать
-`users/app/config/config.local.php` с следующим содержимым
-
-```php
-<?php
-
-declare(strict_types=1);
-
-return new \Phalcon\Config([
-    'database' => [
-        'adapter' => 'Sqlite',
-        'dbname' => BASE_PATH . '/data/sqlite.db',
-        'schema' => '',
-    ],
-]);
-
-```
 3. Выполнить `$ docker-compose up`
 
 Через env можно передать желаемый порт, по умолчанию 80
@@ -88,22 +71,20 @@ return new \Phalcon\Config([
  
 Это имена контейнеров и они доступны из php в массиве $_ENV
 
-
 Другие доступные переменные можно посмотерть в .env
-
 
 **Тесты**
 
 ```
-$ cd site && make unit-test && cd -
-$ cd users && make unit-test && cd -
+$ make site-unit-test
+$ make users-unit-test
 ```
 
 
 **Покрытие**
 
 ```
-$ cd site && make coverage && cd -
-$ cd users && make coverage && cd -
+$ make site-coverage
+$ make users-coverage
 ```
 
