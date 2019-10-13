@@ -39,6 +39,7 @@ services:
       - "${PORT}:80"
     depends_on:
       - site
+    tty: true
   users_nginx:
     container_name: ${USERS_CONTAINER_NAME}_nginx
     image: nginx:alpine
@@ -46,14 +47,14 @@ services:
       - ./users/conf/nginx/nginx-site.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - users
+    restart: always
   site:
-    tty: true`
     environment:
       USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}_nginx
       # Включает xdebug
       #ENABLE_XDEBUG: 1
-  users:
     tty: true
+    restart: always
 ```
 
 Скопировать конфиг предпочитаемого сервера и вставить его в `docker-compose.override.yml`

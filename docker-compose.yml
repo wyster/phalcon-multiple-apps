@@ -7,8 +7,12 @@ services:
       - ./site:/var/www/html
     environment:
       USERS_CONTAINER_NAME: ${USERS_CONTAINER_NAME}
+    tty: true
+    restart: always
   users:
     container_name: ${USERS_CONTAINER_NAME}
     build: ./users
     volumes:
       - ./users:/var/www/html
+    tty: true
+    restart: always
